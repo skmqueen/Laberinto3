@@ -2,23 +2,29 @@ using UnityEngine;
 
 public class MovimientoCaracol : MonoBehaviour
 {
-    public float velocidadMovimiento = 1.5f;
+    public float velocidadMovimiento = 1f;
 
     void Update()
     {
-        // Lectura de input
         float movimientoEjeX = Input.GetAxisRaw("Horizontal");
         float movimientoEjeZ = Input.GetAxisRaw("Vertical");
 
-        Vector3 direccion = new Vector3(movimientoEjeX, 0, movimientoEjeZ);
+        Vector3 movimiento = new Vector3(movimientoEjeX, 0, movimientoEjeZ);
 
-        if (direccion != Vector3.zero)
+        if (movimiento != Vector3.zero)
         {
-            // Rotación instantánea hacia la dirección del movimiento
-            transform.rotation = Quaternion.LookRotation(direccion);
+            //Rotaciones de Misifú
+            if (Input.GetKey(KeyCode.W))
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+            else if (Input.GetKey(KeyCode.A))
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            else if (Input.GetKey(KeyCode.S))
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+            else if (Input.GetKey(KeyCode.D))
+                transform.rotation = Quaternion.Euler(0, 0, 0); // puedes ajustar a tu gusto
 
-            // Movimiento hacia adelante respecto a la nueva rotación
-            transform.Translate(Vector3.forward * velocidadMovimiento * Time.deltaTime);
+            //Evitar santos en el espacio
+            transform.position += movimiento.normalized * velocidadMovimiento * Time.deltaTime;
         }
     }
 }
