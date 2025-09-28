@@ -6,14 +6,18 @@ public class MovimientoCaracol : MonoBehaviour
 
     void Update()
     {
-        float movimientoEjeX = Input.GetAxisRaw("Horizontal");
-        float movimientoEjeZ = Input.GetAxisRaw("Vertical");
+        // Lectura de input
+        float inputX = Input.GetAxis("Horizontal");
+        float inputZ = Input.GetAxis("Vertical");
 
-        Vector3 movimiento = new Vector3(movimientoEjeX, 0, movimientoEjeZ);
+        Vector3 direccion = new Vector3(inputX, 0, inputZ);
 
-        if (movimiento != Vector3.zero)
+        if (direccion != Vector3.zero)
         {
-            //Rotaciones de Misifú
+            // Normalizamos la dirección para evitar mayor velocidad en diagonal
+            direccion = direccion.normalized;
+
+            // Rotaciones instantáneas según tecla
             if (Input.GetKey(KeyCode.W))
                 transform.rotation = Quaternion.Euler(0, -90, 0);
             else if (Input.GetKey(KeyCode.A))
@@ -21,10 +25,10 @@ public class MovimientoCaracol : MonoBehaviour
             else if (Input.GetKey(KeyCode.S))
                 transform.rotation = Quaternion.Euler(0, 90, 0);
             else if (Input.GetKey(KeyCode.D))
-                transform.rotation = Quaternion.Euler(0, 0, 0); // puedes ajustar a tu gusto
+                transform.rotation = Quaternion.Euler(0, 0, 0);
 
-            //Evitar santos en el espacio
-            transform.position += movimiento.normalized * velocidadMovimiento * Time.deltaTime;
+            // Movimiento
+            transform.Translate(direccion * velocidadMovimiento * Time.deltaTime, Space.World);
         }
     }
 }
