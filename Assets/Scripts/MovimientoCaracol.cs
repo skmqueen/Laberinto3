@@ -17,7 +17,7 @@ public class MovimientoCaracol : MonoBehaviour
             // Normalizamos la dirección para evitar mayor velocidad en diagonal
             direccion = direccion.normalized;
 
-            // Rotaciones instantáneas según tecla
+            // Rotaciones instantáneas según tecla para que Misifú mire en la dirección
             if (Input.GetKey(KeyCode.W))
                 transform.rotation = Quaternion.Euler(0, -90, 0);
             else if (Input.GetKey(KeyCode.A))

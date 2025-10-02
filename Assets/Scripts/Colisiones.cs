@@ -16,7 +16,7 @@ public class Colisiones : MonoBehaviour
     {
         if (paredRoja == true)
         {
-            tiempoEnRojo -= Time.deltaTime; // resta el tiempo en segundos reales
+            tiempoEnRojo -= Time.deltaTime; // resta el tiempo en segundos, de ahí el -=
 
             if (tiempoEnRojo <= 0.0f)
             {
@@ -30,15 +30,13 @@ public class Colisiones : MonoBehaviour
         }
     }
 
-    // Se ejecuta cuando otro objeto colisiona con este GameObject
+    // Se ejecuta cuando otro objeto colisiona con este
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Player")
         {
-            // Cambia el material de la pared al tocado
+            // Cambia el material de la pared al rojo
             gameObject.GetComponent<MeshRenderer>().material = materialParedTocada;
-
-            // Activamos el estado de pared roja
             paredRoja = true;
         }
     }
